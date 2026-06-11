@@ -1,0 +1,32 @@
+.git
+.gitignore
+.dockerignore
+
+# Local env
+.env
+.env.*
+!.env.example
+
+# Node
+frontend/node_modules
+frontend/.next
+frontend/npm-debug.log*
+
+# Rust
+backend/rust-api/target
+
+# Python
+backend/python-services/.venv
+backend/python-services/venv
+__pycache__
+*.py[cod]
+.pytest_cache
+.ruff_cache
+
+# OS / editor
+.DS_Store
+.idea
+.vscode
+
+# Local docs and generated artifacts
+*.log

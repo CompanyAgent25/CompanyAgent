@@ -1,0 +1,56 @@
+[package]
+name = "companyagent-api"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Web framework
+axum = { version = "0.7", features = ["ws", "macros"] }
+axum-extra = { version = "0.9", features = ["typed-header"] }
+tower = { version = "0.4", features = ["full"] }
+tower-http = { version = "0.5", features = ["cors", "trace", "limit", "compression-gzip"] }
+tokio = { version = "1", features = ["full"] }
+hyper = { version = "1", features = ["full"] }
+
+# HTTP client (used for forwarding to Python service)
+reqwest = { version = "0.12", features = ["json"] }
+
+# Database
+sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "postgres", "uuid", "chrono", "json"] }
+
+# Redis
+redis = { version = "0.25", features = ["tokio-comp", "connection-manager"] }
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Auth
+jsonwebtoken = "9"
+bcrypt = "0.15"
+
+# UUID
+uuid = { version = "1", features = ["v4", "serde"] }
+
+# Time
+chrono = { version = "0.4", features = ["serde"] }
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+
+# Config
+dotenvy = "0.15"
+
+# Validation
+validator = { version = "0.18", features = ["derive"] }
+
+# Slug generation
+slug = "0.1"
+
+# Error handling
+thiserror = "1"
+anyhow = "1"
+
+[dev-dependencies]
+tokio-test = "0.4"
