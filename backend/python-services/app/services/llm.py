@@ -129,7 +129,7 @@ class LLMService:
             "stream": False,
         }
 
-        if tools:
+        if tools and settings.llm_enable_tools:
             payload["tools"] = self._to_openai_tools(tools)
 
         headers = {"Content-Type": "application/json"}

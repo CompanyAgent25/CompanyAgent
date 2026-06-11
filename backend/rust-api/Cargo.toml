@@ -51,6 +51,7 @@ slug = "0.1"
 # Error handling
 thiserror = "1"
 anyhow = "1"
+async-trait = "0.1"
 
 [dev-dependencies]
 tokio-test = "0.4"

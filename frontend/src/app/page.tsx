@@ -9,7 +9,7 @@ export default function Home() {
   const { isAuthenticated, isLoading, initialize } = useAuthStore();
 
   useEffect(() => {
-    initialize();
+    void initialize();
   }, [initialize]);
 
   useEffect(() => {

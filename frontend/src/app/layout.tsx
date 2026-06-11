@@ -5,6 +5,9 @@ import { Providers } from "@/components/Providers";
 export const metadata: Metadata = {
   title: "CompanyAgent",
   description: "Enterprise Multi-Agent AI Platform",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

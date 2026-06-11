@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { ArrowLeft, Bot, Circle } from "lucide-react";
 import { AppLayout } from "@/components/Layout";
 import { ChatInterface } from "@/components/ChatInterface";
 import { api } from "@/lib/api";
@@ -36,7 +37,7 @@ export default function ConversationPage() {
   if (loading) {
     return (
       <AppLayout>
-        <div className="animate-pulse h-96 bg-surface-2 rounded-xl" />
+        <div className="h-[calc(100vh-7rem)] animate-pulse rounded-lg bg-white" />
       </AppLayout>
     );
   }
@@ -45,30 +46,36 @@ export default function ConversationPage() {
 
   return (
     <AppLayout>
-      <div className="max-w-4xl mx-auto h-[calc(100vh-8rem)] flex flex-col">
-        <div className="flex items-center justify-between mb-4">
-          <div>
+      <div className="mx-auto flex h-[calc(100vh-7rem)] max-w-6xl flex-col overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-sm">
+        <div className="flex min-h-16 items-center justify-between gap-4 border-b border-neutral-200 bg-white px-4 py-3 sm:px-5">
+          <div className="flex min-w-0 items-center gap-3">
             <button
               onClick={() => router.push("/conversations")}
-              className="text-sm text-gray-500 hover:text-gray-700 mb-1"
+              className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-neutral-200 text-neutral-500 transition-colors hover:bg-neutral-50 hover:text-neutral-950"
+              title="Back to conversations"
             >
-              &larr; Back
+              <ArrowLeft className="h-4 w-4" />
             </button>
-            <h1 className="text-xl font-bold text-gray-900">
-              {conversation.title || "Conversation"}
-            </h1>
-            {agent && <p className="text-sm text-gray-500">with {agent.name}</p>}
+            <div className="min-w-0">
+              <h1 className="truncate text-base font-semibold tracking-normal text-neutral-950">
+                {conversation.title || "Conversation"}
+              </h1>
+              <div className="mt-0.5 flex min-w-0 items-center gap-2 text-xs text-neutral-500">
+                <Bot className="h-3.5 w-3.5 shrink-0" />
+                <span className="truncate">{agent?.name || "Agent"}</span>
+              </div>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            {agent && (
-              <span className={agent.execution_mode === "autonomous" ? "badge-yellow" : "badge-blue"}>
-                {agent.execution_mode}
-              </span>
-            )}
-          </div>
+
+          {agent && (
+            <div className="hidden items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-2 text-xs font-medium text-neutral-600 sm:flex">
+              <Circle className="h-2 w-2 fill-emerald-500 text-emerald-500" />
+              {agent.execution_mode}
+            </div>
+          )}
         </div>
 
-        <div className="card flex-1 overflow-hidden p-0">
+        <div className="min-h-0 flex-1">
           <ChatInterface conversationId={params.id as string} initialMessages={messages} />
         </div>
       </div>

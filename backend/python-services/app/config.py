@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     llm_model: str = "claude-sonnet-4-20250514"
     llm_max_tokens: int = 4096
     llm_timeout_seconds: int = 60
+    llm_enable_tools: bool = True
     host: str = "0.0.0.0"
     port: int = 8000
     rust_api_url: str = "http://rust-api:8080"

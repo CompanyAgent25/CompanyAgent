@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from typing import Any
 from uuid import UUID
 
@@ -177,8 +178,11 @@ class Orchestrator:
             skills_dicts = [dict(s) for s in skills]
             tools = llm_service.build_tools_from_skills(skills_dicts) if skills_dicts else None
 
-            # Build task prompt from input
+            # Build task prompt from input. Depending on the asyncpg/jsonb codec,
+            # this value can arrive as either a dict or a JSON string.
             task_input = task["input"]
+            if isinstance(task_input, str):
+                task_input = json.loads(task_input)
             prompt = task_input.get("prompt", str(task_input))
 
             messages = [{"role": "user", "content": prompt}]
@@ -191,7 +195,6 @@ class Orchestrator:
                 temperature=agent["temperature"],
             )
 
-            import json
             output = {
                 "content": result["content"],
                 "model": result.get("model"),

@@ -28,6 +28,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Local machine helper scripts generated during smoke testing
+scripts/
+
 # OS / editors
 .DS_Store
 .idea/

@@ -68,6 +68,12 @@ class ApiClient {
     });
   }
 
+  async me(): Promise<AuthResponse["user"]> {
+    return this.request("/api/v1/auth/me", {
+      method: "POST",
+    });
+  }
+
   // Agents
   async getAgents(): Promise<Agent[]> {
     return this.request("/api/v1/agents");

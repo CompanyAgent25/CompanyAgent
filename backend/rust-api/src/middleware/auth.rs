@@ -1,3 +1,4 @@
+use async_trait::async_trait;
 use axum::extract::FromRequestParts;
 use axum::http::request::Parts;
 use jsonwebtoken::{decode, DecodingKey, Validation};
@@ -10,6 +11,7 @@ pub struct AuthUser {
     pub claims: Claims,
 }
 
+#[async_trait]
 impl FromRequestParts<AppState> for AuthUser {
     type Rejection = AppError;
 

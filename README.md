@@ -33,7 +33,8 @@ docker-compose up --build
 # Python API: http://localhost:8000
 ```
 
-Default credentials: `admin@demo.com` / `admin123`
+For production, run the migration schema only and create the first user through
+the app registration flow. No shared demo account is shipped in the seed data.
 
 ## Model Providers
 
@@ -45,12 +46,12 @@ Examples:
 ```bash
 # Anthropic
 LLM_PROVIDER=anthropic
-ANTHROPIC_API_KEY=sk-ant-...
+ANTHROPIC_API_KEY=replace-with-anthropic-key
 LLM_MODEL=claude-sonnet-4-20250514
 
 # DeepSeek or another OpenAI-compatible provider
 LLM_PROVIDER=deepseek
-LLM_API_KEY=...
+LLM_API_KEY=replace-with-provider-key
 LLM_BASE_URL=https://api.deepseek.com/v1
 LLM_MODEL=deepseek-chat
 
@@ -122,3 +123,14 @@ make lint
 ## API
 
 See [docs/API.md](docs/API.md) for the full API reference.
+
+## Deployment
+
+The recommended production split is:
+
+- Netlify: Next.js frontend
+- Supabase: PostgreSQL database
+- Managed Redis: Upstash, Redis Cloud, Railway Redis, or equivalent
+- Container/API host: Rust API and Python AI service
+
+See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for the full checklist.

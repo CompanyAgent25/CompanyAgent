@@ -1,6 +1,6 @@
 use axum::{
     extract::{Path, Query, State},
-    routing::{get, post},
+    routing::get,
     Json, Router,
 };
 use uuid::Uuid;

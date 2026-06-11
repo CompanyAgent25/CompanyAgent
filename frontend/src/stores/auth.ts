@@ -9,7 +9,7 @@ interface AuthState {
   login: (email: string, password: string) => Promise<void>;
   register: (teamName: string, email: string, password: string, name: string) => Promise<void>;
   logout: () => void;
-  initialize: () => void;
+  initialize: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -34,12 +34,20 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ user: null, isAuthenticated: false });
   },
 
-  initialize: () => {
+  initialize: async () => {
     const token = api.getToken();
     if (token) {
-      set({ isAuthenticated: true, isLoading: false });
-    } else {
-      set({ isLoading: false });
+      try {
+        const user = await api.me();
+        set({ user, isAuthenticated: true, isLoading: false });
+        return;
+      } catch {
+        api.setToken(null);
+        set({ user: null, isAuthenticated: false, isLoading: false });
+        return;
+      }
     }
+
+    set({ user: null, isAuthenticated: false, isLoading: false });
   },
 }));

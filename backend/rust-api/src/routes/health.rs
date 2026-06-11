@@ -16,8 +16,9 @@ async fn health_check() -> Json<Value> {
 async fn health_detailed(State(state): State<AppState>) -> Json<Value> {
     let db_ok = sqlx::query("SELECT 1").execute(&state.db).await.is_ok();
 
+    let mut redis = state.redis.clone();
     let redis_ok = redis::cmd("PING")
-        .query_async::<String>(&mut state.redis.clone())
+        .query_async::<_, String>(&mut redis)
         .await
         .is_ok();
 
