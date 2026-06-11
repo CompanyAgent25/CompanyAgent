@@ -12,6 +12,8 @@ venv/
 # Build outputs
 .next/
 frontend/.next/
+.netlify/
+frontend/.netlify/
 target/
 dist/
 build/
