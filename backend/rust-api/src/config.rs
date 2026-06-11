@@ -21,8 +21,8 @@ impl Config {
             redis_url: std::env::var("REDIS_URL")
                 .unwrap_or_else(|_| "redis://127.0.0.1:6379".to_string()),
             host: std::env::var("RUST_API_HOST").unwrap_or_else(|_| "0.0.0.0".to_string()),
-            port: std::env::var("RUST_API_PORT")
-                .or_else(|_| std::env::var("PORT"))
+            port: std::env::var("PORT")
+                .or_else(|_| std::env::var("RUST_API_PORT"))
                 .unwrap_or_else(|_| "8080".to_string())
                 .parse()
                 .context("RUST_API_PORT or PORT must be a valid port number")?,
