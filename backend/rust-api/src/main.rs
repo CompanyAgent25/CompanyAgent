@@ -45,6 +45,7 @@ async fn main() -> anyhow::Result<()> {
         .connect(&config.database_url)
         .await?;
 
+    ensure_schema(&db).await?;
     tracing::info!("Database connected");
 
     let redis_client = redis::Client::open(config.redis_url.as_str())?;
@@ -82,6 +83,22 @@ async fn main() -> anyhow::Result<()> {
 
     let listener = tokio::net::TcpListener::bind(addr).await?;
     axum::serve(listener, app).await?;
+
+    Ok(())
+}
+
+async fn ensure_schema(db: &sqlx::PgPool) -> anyhow::Result<()> {
+    let schema_exists: Option<String> =
+        sqlx::query_scalar("SELECT to_regclass('public.teams')::text")
+            .fetch_one(db)
+            .await?;
+
+    if schema_exists.is_none() {
+        sqlx::raw_sql(include_str!("../migrations/001_initial.sql"))
+            .execute(db)
+            .await?;
+        tracing::info!("Database schema initialized");
+    }
 
     Ok(())
 }

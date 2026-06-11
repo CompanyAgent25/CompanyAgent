@@ -12,6 +12,7 @@ RUN rm -rf src
 
 # Build actual code
 COPY backend/rust-api/src ./src
+COPY backend/rust-api/migrations ./migrations
 RUN touch src/main.rs && cargo build --release
 
 # Runtime image
